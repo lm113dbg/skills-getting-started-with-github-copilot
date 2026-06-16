@@ -13,12 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#039;");
   }
 
+  let messageTimeout = null;
+
   function showMessage(message, type) {
     messageDiv.textContent = message;
     messageDiv.className = type;
     messageDiv.classList.remove("hidden");
 
-    setTimeout(() => {
+    clearTimeout(messageTimeout);
+    messageTimeout = setTimeout(() => {
       messageDiv.classList.add("hidden");
     }, 5000);
   }
@@ -72,9 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const schedule = details.schedule || "Schedule to be announced";
 
         activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${description}</p>
-          <p><strong>Schedule:</strong> ${schedule}</p>
+          <h4>${escapeHtml(name)}</h4>
+          <p>${escapeHtml(description)}</p>
+          <p><strong>Schedule:</strong> ${escapeHtml(schedule)}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
           <div class="participants-section">
             <p class="participants-title"><strong>Participants:</strong></p>
